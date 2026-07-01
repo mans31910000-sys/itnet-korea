@@ -7,85 +7,23 @@
 
 <style>
 *{box-sizing:border-box;}
-
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#f5f9ff;
-  color:#0b2239;
-  text-align:center;
-}
-
-.wrap{
-  max-width:760px;
-  margin:0 auto;
-  padding:36px 18px 60px;
-}
-
-.card{
-  background:white;
-  border-radius:24px;
-  padding:30px 22px;
-  box-shadow:0 8px 24px rgba(0,0,0,.08);
-}
-
-h1{
-  font-size:36px;
-  color:#073b78;
-  margin:0 0 12px;
-}
-
-.desc{
-  font-size:18px;
-  line-height:1.6;
-  color:#4b5d6d;
-  margin-bottom:24px;
-}
-
-input, textarea{
-  width:100%;
-  margin:9px 0;
-  padding:16px;
-  border:1px solid #d9e3f0;
-  border-radius:14px;
-  font-size:17px;
-}
-
-textarea{
-  height:160px;
-  resize:none;
-  line-height:1.6;
-}
-
-.btn{
-  width:100%;
-  margin-top:18px;
-  padding:20px;
-  border:0;
-  border-radius:18px;
-  background:linear-gradient(135deg,#0d4fd6,#00a99d);
-  color:white;
-  font-size:23px;
-  font-weight:900;
-  cursor:pointer;
-}
-
-.back{
-  display:block;
-  margin-top:22px;
-  color:#073b78;
-  font-size:18px;
-  font-weight:900;
-  text-decoration:none;
-}
+body{margin:0;font-family:Arial,sans-serif;background:#f5f9ff;color:#0b2239;text-align:center;}
+.wrap{max-width:760px;margin:0 auto;padding:36px 18px 60px;}
+.card{background:white;border-radius:24px;padding:30px 22px;box-shadow:0 8px 24px rgba(0,0,0,.08);}
+h1{font-size:36px;color:#073b78;margin:0 0 12px;}
+.desc{font-size:18px;line-height:1.6;color:#4b5d6d;margin-bottom:24px;}
+input,textarea{width:100%;margin:9px 0;padding:16px;border:1px solid #d9e3f0;border-radius:14px;font-size:17px;}
+textarea{height:160px;resize:none;line-height:1.6;}
+.file-box{margin:12px 0;text-align:left;font-size:16px;color:#4b5d6d;font-weight:700;}
+.preview{display:none;width:100%;max-height:320px;object-fit:cover;border-radius:18px;margin:14px 0;}
+.btn{width:100%;margin-top:18px;padding:20px;border:0;border-radius:18px;background:linear-gradient(135deg,#0d4fd6,#00a99d);color:white;font-size:23px;font-weight:900;cursor:pointer;}
+.back{display:block;margin-top:22px;color:#073b78;font-size:18px;font-weight:900;text-decoration:none;}
 </style>
 </head>
 
 <body>
-
 <div class="wrap">
   <div class="card">
-
     <h1>⭐ 잇넷 후기 작성</h1>
 
     <div class="desc">
@@ -98,39 +36,66 @@ textarea{
       <input type="text" id="title" placeholder="후기 제목" required>
       <textarea id="content" placeholder="후기 내용을 입력해주세요." required></textarea>
 
+      <div class="file-box">후기 사진 첨부 선택</div>
+      <input type="file" id="photo" accept="image/*">
+      <img id="preview" class="preview">
+
       <button type="submit" class="btn">후기 등록하기</button>
     </form>
 
     <a href="reviews.html" class="back">후기게시판으로 돌아가기</a>
     <a href="index.html" class="back">잇넷 메인으로 돌아가기</a>
-
   </div>
 </div>
 
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxxS-o0PaeURCt_Uj9DnwcjtdBj-3zjFl5dxPWFTwMbQhAyMEnOtmYc9xK57chq5bq3yQ/exec";
 
+let selectedPhotoData = "";
+let selectedPhotoName = "";
+
+document.getElementById("photo").addEventListener("change", function(){
+  const file = this.files[0];
+  if(!file) return;
+
+  selectedPhotoName = file.name;
+
+  const reader = new FileReader();
+  reader.onload = function(e){
+    selectedPhotoData = e.target.result;
+    const preview = document.getElementById("preview");
+    preview.src = selectedPhotoData;
+    preview.style.display = "block";
+  };
+  reader.readAsDataURL(file);
+});
+
 document.getElementById("reviewForm").addEventListener("submit", function(e){
   e.preventDefault();
+
+  const btn = document.querySelector(".btn");
+  btn.disabled = true;
+  btn.innerText = "등록 중입니다...";
 
   const formData = new FormData();
   formData.append("action", "itnetReview");
   formData.append("writer", document.getElementById("writerName").value);
   formData.append("title", document.getElementById("title").value);
   formData.append("content", document.getElementById("content").value);
+  formData.append("photoData", selectedPhotoData);
+  formData.append("photoName", selectedPhotoName);
 
-  fetch(SCRIPT_URL, {
-    method: "POST",
-    body: formData
-  })
-  .then(res => res.text())
-  .then(() => {
-    alert("후기가 등록되었습니다.");
-    location.href = "reviews.html";
-  })
-  .catch(() => {
-    alert("후기 등록 중 오류가 발생했습니다.");
-  });
+  fetch(SCRIPT_URL, { method:"POST", body:formData })
+    .then(res => res.text())
+    .then(() => {
+      alert("후기가 등록되었습니다.");
+      location.href = "review_list.html";
+    })
+    .catch(() => {
+      alert("후기 등록 중 오류가 발생했습니다.");
+      btn.disabled = false;
+      btn.innerText = "후기 등록하기";
+    });
 });
 </script>
 
