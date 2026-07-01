@@ -2,26 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-<loc>https://mans31910000-sys.github.io/itnet/</loc>
+<loc>https://mans31910000-sys.github.io/itnet-korea/</loc>
 <priority>1.0</priority>
 </url>
 
 <url>
-<loc>https://mans31910000-sys.github.io/itnet/register.html</loc>
+<loc>https://mans31910000-sys.github.io/itnet-korea/register.html</loc>
 </url>
 
 <url>
-<loc>https://mans31910000-sys.github.io/itnet/reviews.html</loc>
+<loc>https://mans31910000-sys.github.io/itnet-korea/item.html</loc>
 </url>
 
 <url>
-<loc>https://mans31910000-sys.github.io/itnet/review_write.html</loc>
+<loc>https://mans31910000-sys.github.io/itnet-korea/reviews.html</loc>
 </url>
 
 <url>
-<loc>https://mans31910000-sys.github.io/itnet/review_list.html</loc>
+<loc>https://mans31910000-sys.github.io/itnet-korea/review_write.html</loc>
 </url>
+
 <url>
-<loc>https://mans31910000-sys.github.io/itnet/item.html</loc>
+<loc>https://mans31910000-sys.github.io/itnet-korea/review_list.html</loc>
 </url>
+
 </urlset>
