@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR 생성 완료 - 잇넷</title>
+
+<style>
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(180deg,#ffffff 0%,#f5fbfc 100%);
+  color:#0b2239;
+  text-align:center;
+}
+
+.wrap{
+  max-width:620px;
+  margin:0 auto;
+  padding:30px 18px;
+}
+
+.card{
+  background:#fff;
+  border-radius:22px;
+  padding:28px 18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+h1{
+  margin:0 0 10px;
+  font-size:28px;
+  color:#0077b6;
+}
+
+.item-number{
+  margin:12px 0;
+  font-size:31px;
+  font-weight:900;
+  color:#00a99d;
+}
+
+.desc{
+  font-size:17px;
+  line-height:1.7;
+  color:#4d5d73;
+}
+
+.qr-box{
+  display:inline-block;
+  margin:18px 0 24px;
+  padding:18px;
+  border:2px solid #e4ecf7;
+  border-radius:18px;
+  background:#fff;
+}
+
+.qr-box img{
+  display:block;
+  width:260px;
+  max-width:100%;
+}
+
+.info{
+  margin:16px 0;
+  font-size:15px;
+  line-height:1.8;
+  color:#334;
+}
+
+.btn{
+  display:block;
+  width:100%;
+  max-width:360px;
+  margin:12px auto;
+  padding:17px 14px;
+  border-radius:14px;
+  border:2px solid #0077b6;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+  text-decoration:none;
+}
+
+.primary{
+  background:#0077b6;
+  color:#fff;
+}
+
+.secondary{
+  background:#fff;
+  color:#0077b6;
+}
+
+.option-box{
+  max-width:470px;
+  margin:24px auto;
+  padding:20px 16px;
+  border:2px solid #e4ecf7;
+  border-radius:18px;
+  background:#f6fcfd;
+}
+
+.option-title{
+  margin:6px 0 12px;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.shape-options{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-bottom:22px;
+}
+
+.shape-options label{
+  padding:11px 13px;
+  border:2px solid #0077b6;
+  border-radius:11px;
+  background:#fff;
+  color:#0077b6;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.size-options{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.size-btn{
+  padding:13px 8px;
+  border:2px solid #0077b6;
+  border-radius:11px;
+  background:#fff;
+  color:#0077b6;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.size-btn.active{
+  background:#0077b6;
+  color:#fff;
+}
+
+.guide{
+  margin-top:15px;
+  color:#556;
+  font-size:15px;
+  line-height:1.6;
+}
+
+.count{
+  margin-top:7px;
+  color:#0077b6;
+  font-size:16px;
+  font-weight:bold;
+}
+
+.warning{
+  margin-top:14px;
+  padding:12px;
+  border-radius:11px;
+  background:#fff8e1;
+  color:#6a5200;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.footer{
+  margin-top:23px;
+  color:#4d5d73;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+  <div class="card">
+
+    <h1>잇넷 QR 생성이 완료되었습니다</h1>
+
+    <div id="itemNumber" class="item-number"></div>
+
+    <div class="desc">
+      QR을 출력해서<br>
+      열쇠, 지갑, 가방 등 소중한 물건에 부착하세요.
+    </div>
+
+    <div class="qr-box">
+      <img id="qrImage" src="" alt="잇넷 QR 코드">
+    </div>
+
+    <div class="option-box">
+
+      <div class="option-title">출력 형태를 선택하세요</div>
+
+      <div class="shape-options">
+        <label>
+          <input type="radio" name="printShape" value="half" checked>
+          반반 추천
+        </label>
+
+        <label>
+          <input type="radio" name="printShape" value="square">
+          사각만
+        </label>
+
+        <label>
+          <input type="radio" name="printShape" value="circle">
+          원형만
+        </label>
+      </div>
+
+      <div class="option-title">출력할 QR 크기를 선택하세요</div>
+
+      <div class="size-options">
+        <button type="button" class="size-btn" data-size="15">15mm 초소형</button>
+        <button type="button" class="size-btn" data-size="20">20mm 소형</button>
+        <button type="button" class="size-btn active" data-size="25">25mm 추천</button>
+        <button type="button" class="size-btn" data-size="30">30mm 대형</button>
+      </div>
+
+      <div id="sizeGuide" class="guide">
+        25mm · 표준 크기 · 대부분의 물건에 추천
+      </div>
+
+      <div id="printCount" class="count"></div>
+
+      <div class="warning">
+        인쇄할 때 <strong>배율 100% 또는 실제 크기</strong>를 선택하세요.<br>
+        ‘페이지에 맞춤’은 사용하지 마세요.
+      </div>
+    </div>
+
+    <button class="btn primary" onclick="printQrSheet()">
+      🖨️ A4에 QR 출력하기
+    </button>
+
+    <button class="btn secondary" onclick="sharePrintLink()">
+      📤 PC로 링크 보내기
+    </button>
+
+    <div class="info">
+      📱 휴대폰이 프린터와 연결되어 있으면 위 출력 버튼을 누르세요.<br>
+      💻 연결되어 있지 않으면 링크를 보내 PC에서 출력하세요.
+    </div>
+
+    <a class="btn secondary"
+       href="https://mans31910000-sys.github.io/itnet-korea/">
+      홈으로 돌아가기
+    </a>
+
+  </div>
+
+  <div class="footer">
+    소중한 그것(It)을 다시 연결합니다.
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const itemNumber = params.get("id") || "";
+
+document.getElementById("itemNumber").innerText = itemNumber;
+
+const itemPageUrl =
+  "https://mans31910000-sys.github.io/itnet-korea/item.html?id=" +
+  encodeURIComponent(itemNumber);
+
+const qrUrl =
+  "https://api.qrserver.com/v1/create-qr-code/?size=800x800&data=" +
+  encodeURIComponent(itemPageUrl);
+
+document.getElementById("qrImage").src = qrUrl;
+
+let selectedSize = 25;
+
+const guides = {
+  15:"15mm · 초소형 · 작은 스티커용",
+  20:"20mm · 소형 · 열쇠나 작은 물건용",
+  25:"25mm · 표준 크기 · 대부분의 물건에 추천",
+  30:"30mm · 대형 · 가방이나 큰 물건용"
+};
+
+const pageWidth = 194;
+const pageHeight = 281;
+const gap = 8;
+
+function getLayout(size){
+  const columns = Math.floor((pageWidth + gap) / (size + gap));
+  const rows = Math.floor((pageHeight + gap) / (size + gap));
+
+  return {
+    columns:columns,
+    rows:rows,
+    total:columns * rows
+  };
+}
+
+function updateInformation(){
+  const layout = getLayout(selectedSize);
+
+  document.getElementById("sizeGuide").innerText =
+    guides[selectedSize];
+
+  document.getElementById("printCount").innerText =
+    "A4 한 장에 " +
+    layout.columns + "열 × " +
+    layout.rows + "줄, 총 " +
+    layout.total + "개가 출력됩니다.";
+}
+
+document.querySelectorAll(".size-btn").forEach(function(button){
+  button.addEventListener("click", function(){
+
+    document.querySelectorAll(".size-btn").forEach(function(btn){
+      btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+    selectedSize = Number(button.dataset.size);
+    updateInformation();
+  });
+});
+
+updateInformation();
+
+function sharePrintLink(){
+  const shareUrl = window.location.href;
+  const shareText = "잇넷 QR 출력 링크입니다. PC에서 열어 출력하세요.";
+
+  if(navigator.share){
+    navigator.share({
+      title:"잇넷 QR 출력",
+      text:shareText,
+      url:shareUrl
+    }).catch(function(){});
+  }else if(navigator.clipboard){
+    navigator.clipboard.writeText(shareUrl).then(function(){
+      alert("출력 링크가 복사되었습니다. 카카오톡 나에게 보내기로 붙여 넣으세요.");
+    });
+  }else{
+    prompt("아래 링크를 복사해 PC로 보내세요.", shareUrl);
+  }
+}
+
+function printQrSheet(){
+  const shapeInput =
+    document.querySelector('input[name="printShape"]:checked');
+
+  const printShape = shapeInput ? shapeInput.value : "half";
+  const layout = getLayout(selectedSize);
+  const columns = layout.columns;
+  const total = layout.total;
+  const qrInnerSize = selectedSize - 4;
+
+  const printWindow = window.open("", "_blank");
+
+  if(!printWindow){
+    alert("팝업이 차단되었습니다. 팝업을 허용한 뒤 다시 눌러주세요.");
+    return;
+  }
+
+  let qrItems = "";
+
+  for(let i = 0; i < total; i++){
+    let shapeClass = "square";
+
+    if(printShape === "circle"){
+      shapeClass = "circle";
+    }else if(printShape === "half"){
+      const columnNumber = i % columns;
+
+      shapeClass =
+        columnNumber < Math.ceil(columns / 2)
+        ? "square"
+        : "circle";
+    }
+
+    qrItems +=
+      '<div class="qr-item ' + shapeClass + '">' +
+        '<img src="' + qrUrl + '" alt="잇넷 QR 코드">' +
+      '</div>';
+  }
+
+  const printHtml =
+    '<!DOCTYPE html>' +
+    '<html lang="ko">' +
+    '<head>' +
+    '<meta charset="UTF-8">' +
+    '<title>잇넷 QR 출력</title>' +
+
+    '<style>' +
+    '@page{size:A4 portrait;margin:8mm;}' +
+    '*{box-sizing:border-box;}' +
+    'html,body{margin:0;padding:0;background:#fff;}' +
+
+    '.qr-sheet{' +
+      'width:194mm;' +
+      'height:281mm;' +
+      'display:grid;' +
+      'grid-template-columns:repeat(' + columns + ',' + selectedSize + 'mm);' +
+      'grid-auto-rows:' + selectedSize + 'mm;' +
+      'gap:' + gap + 'mm;' +
+      'justify-content:center;' +
+      'align-content:center;' +
+      'overflow:hidden;' +
+    '}' +
+
+    '.qr-item{' +
+      'width:' + selectedSize + 'mm;' +
+      'height:' + selectedSize + 'mm;' +
+      'display:flex;' +
+      'align-items:center;' +
+      'justify-content:center;' +
+      'overflow:hidden;' +
+      'break-inside:avoid;' +
+    '}' +
+
+    '.qr-item.square{' +
+      'border:0.25mm dashed #cccccc;' +
+      'border-radius:3mm;' +
+    '}' +
+
+    '.qr-item.circle{' +
+      'border:0.25mm dashed #cccccc;' +
+      'border-radius:50%;' +
+    '}' +
+
+    '.qr-item img{' +
+      'display:block;' +
+      'width:' + qrInnerSize + 'mm;' +
+      'height:' + qrInnerSize + 'mm;' +
+      'object-fit:contain;' +
+    '}' +
+    '</style>' +
+    '</head>' +
+
+    '<body>' +
+      '<div class="qr-sheet">' + qrItems + '</div>' +
+
+      '<script>' +
+      'window.addEventListener("load",function(){' +
+        'setTimeout(function(){window.print();},500);' +
+      '});' +
+      '<\\/script>' +
+    '</body>' +
+    '</html>';
+
+  printWindow.document.open();
+  printWindow.document.write(printHtml);
+  printWindow.document.close();
+}
+</script>
+
+</body>
+</html>
