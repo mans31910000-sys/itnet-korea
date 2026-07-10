@@ -261,10 +261,6 @@ body{
     <strong id="itnetCount">0</strong>개
   </div>
 
-  <div style="margin-top:10px;">
-    🐶 현재 등록된 반려견
-    <strong id="petCount">0</strong>마리
-  </div>
 </div>
 <div style="margin-top:18px; text-align:center;">
   <a href="lost-item-qr.html" style="color:#1976d2; font-weight:bold; text-decoration:none;">
@@ -326,8 +322,6 @@ function showCount(data){
   document.getElementById("itnetCount").innerText =
     (data.itnetCount ?? 0).toLocaleString();
 
-  document.getElementById("petCount").innerText =
-    (data.petCount ?? data.count ?? 0).toLocaleString();
 }
 
 const countScript = document.createElement("script");
