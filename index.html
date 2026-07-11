@@ -228,6 +228,57 @@ body{
   color:#e53935;
   font-size:25px;
 }
+
+.itnet-use-box{
+  max-width:760px;
+  margin:24px auto 30px;
+  padding:24px 20px;
+  border-radius:20px;
+  background:#f4fbfc;
+  border:1px solid #dceff1;
+  text-align:left;
+}
+
+.itnet-use-box h3{
+  margin:0 0 18px;
+  font-size:24px;
+  text-align:center;
+  color:#0b2239;
+}
+
+.itnet-use-list{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  font-size:17px;
+  line-height:1.6;
+}
+
+.itnet-use-list div{
+  padding:12px 14px;
+  border-radius:12px;
+  background:#ffffff;
+  border:1px solid #e4eef2;
+}
+
+.itnet-use-text{
+  margin:18px 0 0;
+  font-size:18px;
+  font-weight:900;
+  color:#0077b6;
+  text-align:center;
+}
+
+@media(max-width:700px){
+  .itnet-use-list{
+    grid-template-columns:1fr;
+  }
+
+  .itnet-use-box h3{
+    font-size:21px;
+  }
+}
+
 </style>
 </head>
 
@@ -251,6 +302,25 @@ body{
   </div>
 
   <a href="register.html" class="qr-btn">무료 QR 생성하기</a>
+
+  <div class="itnet-use-box">
+
+<h3>💡 잇넷 활용 예시 </h3>
+
+<div class="itnet-use-list">
+
+<div>👶 <strong>아동 비상연락용</strong></div>
+<div>🧓 <strong>치매 노인 비상연락용</strong></div>
+<div>♿ <strong>장애인 비상연락용</strong></div>
+
+<div>🔑 열쇠 · 자동차 키</div>
+<div>👛 지갑 · 카드지갑</div>
+<div>🎒 가방 · 백팩 · 캐리어</div>
+<div>📱 휴대폰 · 태블릿 · 노트북</div>
+<div>🚲 자전거 · 킥보드</div>
+
+</div>
+
 
   <div class="simple">
     회원가입 없이 · 앱 설치 없이 · 바로 사용
