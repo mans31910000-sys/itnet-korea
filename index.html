@@ -4,19 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>잇넷 | 무료 분실물 QR 서비스 · 지갑 열쇠 가방 찾기</title>
+<title>잇넷 | 무료 QR 연결 서비스 · 물건과 보호자 연결</title>
 
-<meta name="description" content="잇넷은 지갑, 열쇠, 자동차 키, 가방, 노트북 등 소중한 물건에 QR을 부착해 발견자와 소유자를 빠르게 연결하는 무료 분실물 QR 서비스입니다. 회원가입 없이 바로 사용할 수 있습니다.">
+<meta name="description" content="잇넷은 소중한 물건부터 보호가 필요한 아동·치매노인까지 QR을 통해 발견자와 소유자 또는 보호자를 빠르게 연결하는 무료 QR 서비스입니다.">
 
-<meta name="keywords" content="잇넷, ITNET KOREA, 분실물 QR, 무료 분실물 QR, 지갑 분실, 열쇠 분실, 자동차 키 분실, 가방 분실, 노트북 분실, QR 연락처, 분실물 찾기, QR 키링">
+<meta name="keywords" content="잇넷, ITNET KOREA, 분실물 QR, 무료 QR, 보호자 연결 QR, 아동 보호 QR, 치매노인 QR, 지갑 분실, 열쇠 분실, 가방 분실, QR 연락처">
 
 <meta name="robots" content="index, follow">
 
 <link rel="canonical" href="https://mans31910000-sys.github.io/itnet-korea/">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="잇넷 | 무료 분실물 QR 서비스">
-<meta property="og:description" content="잃어버린 물건, QR로 다시 연결하세요. 발견자가 QR을 스캔하면 주인에게 바로 연락할 수 있습니다.">
+<meta property="og:title" content="잇넷 | 무료 QR 연결 서비스">
+<meta property="og:description" content="소중한 물건부터 보호가 필요한 가족까지, QR로 다시 연결하세요.">
 <meta property="og:url" content="https://mans31910000-sys.github.io/itnet-korea/">
 <meta property="og:image" content="https://mans31910000-sys.github.io/itnet-korea/itnet-hero.png">
 
@@ -156,41 +156,6 @@ body{
   font-size:27px;
 }
 
-/* 활용 물건 */
-
-.use-section{
-  max-width:760px;
-  margin:20px auto 0;
-  padding:20px 18px;
-  border:1px solid #e4eef2;
-  border-radius:18px;
-  background:#ffffff;
-  box-shadow:0 5px 16px rgba(0,0,0,0.04);
-}
-
-.use-title{
-  margin:0 0 15px;
-  font-size:21px;
-  font-weight:900;
-}
-
-.use-list{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:10px;
-}
-
-.use-item{
-  padding:10px 14px;
-  border-radius:12px;
-  background:#f4fbfc;
-  border:1px solid #dceff1;
-  font-size:16px;
-  font-weight:800;
-  white-space:nowrap;
-}
-
 /* 바로가기 */
 
 .link-section{
@@ -221,49 +186,99 @@ body{
 /* 펫넷 연결 */
 
 .petnet-box{
-  display:flex;
-  align-items:center;
-  gap:18px;
+  position:relative;
   max-width:760px;
-  margin:20px auto 0;
-  padding:20px;
-  border-radius:20px;
-  background:#eefcff;
-  text-align:left;
+  margin:22px auto 0;
+  padding:30px 24px 24px;
+  border:1px solid rgba(255,255,255,0.65);
+  border-radius:25px;
+  background:linear-gradient(135deg,#e8fbff 0%,#dff8f3 48%,#e4ecff 100%);
+  box-shadow:0 14px 34px rgba(7,59,120,0.16);
+  overflow:hidden;
 }
 
-.dog{
-  flex:0 0 auto;
-  font-size:55px;
+.petnet-box::before{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  top:-90px;
+  right:-60px;
+  border-radius:50%;
+  background:rgba(0,169,157,0.12);
 }
 
-.petnet-text{
-  flex:1;
+.petnet-box::after{
+  content:"";
+  position:absolute;
+  width:140px;
+  height:140px;
+  bottom:-80px;
+  left:-50px;
+  border-radius:50%;
+  background:rgba(0,119,217,0.10);
 }
 
-.petnet-text h3{
-  margin:0 0 5px;
-  font-size:21px;
+.petnet-content{
+  position:relative;
+  z-index:1;
 }
 
-.petnet-text p{
+.dog-circle{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:88px;
+  height:88px;
+  margin:0 auto 15px;
+  border:4px solid rgba(255,255,255,0.85);
+  border-radius:50%;
+  background:#ffffff;
+  font-size:52px;
+  box-shadow:0 8px 20px rgba(7,59,120,0.15);
+}
+
+.petnet-label{
+  margin-bottom:8px;
+  color:#00897b;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:1.5px;
+}
+
+.petnet-title{
   margin:0;
+  color:#073052;
+  font-size:27px;
+  line-height:1.35;
+  font-weight:900;
+  word-break:keep-all;
+}
+
+.petnet-desc{
+  margin:11px 0 21px;
   color:#405060;
-  font-size:16px;
-  line-height:1.5;
+  font-size:17px;
+  line-height:1.6;
+  word-break:keep-all;
 }
 
 .petnet-btn{
-  display:inline-block;
-  flex:0 0 auto;
-  padding:14px 18px;
-  border-radius:14px;
-  background:#073b78;
+  display:block;
+  width:100%;
+  padding:18px 16px;
+  border-radius:16px;
+  background:linear-gradient(90deg,#073b78,#005aaa);
   color:#ffffff;
   text-decoration:none;
-  font-size:16px;
+  font-size:20px;
   font-weight:900;
-  white-space:nowrap;
+  box-shadow:0 8px 19px rgba(7,59,120,0.24);
+  transition:transform 0.15s ease;
+}
+
+.petnet-btn:active{
+  transform:scale(0.98);
 }
 
 /* 하단 */
@@ -322,15 +337,6 @@ body{
     font-size:24px;
   }
 
-  .use-title{
-    font-size:19px;
-  }
-
-  .use-item{
-    padding:9px 11px;
-    font-size:15px;
-  }
-
   .link-section{
     grid-template-columns:1fr;
   }
@@ -341,18 +347,27 @@ body{
   }
 
   .petnet-box{
-    flex-direction:column;
-    gap:12px;
-    text-align:center;
+    padding:27px 18px 20px;
+    border-radius:22px;
   }
 
-  .dog{
-    font-size:50px;
+  .dog-circle{
+    width:80px;
+    height:80px;
+    font-size:47px;
+  }
+
+  .petnet-title{
+    font-size:23px;
+  }
+
+  .petnet-desc{
+    font-size:16px;
   }
 
   .petnet-btn{
-    width:100%;
-    text-align:center;
+    padding:17px 14px;
+    font-size:19px;
   }
 }
 </style>
@@ -373,17 +388,17 @@ body{
   <img
     src="itnet-hero.png"
     class="hero-img"
-    alt="잇넷 무료 분실물 QR 서비스"
+    alt="잇넷 무료 QR 연결 서비스"
   >
 
   <div class="main-title">
-    잃어버린 물건,<br>
-    <span>QR로 다시 연결하세요.</span>
+    소중한 물건부터<br>
+    <span>보호가 필요한 가족까지</span>
   </div>
 
   <div class="desc">
-    발견자가 QR을 스캔하면<br>
-    주인에게 바로 연락할 수 있습니다.
+    QR 스캔 한 번으로<br>
+    소유자 또는 보호자에게 바로 연결됩니다.
   </div>
 
   <a href="register.html" class="qr-btn">
@@ -399,32 +414,15 @@ body{
   </div>
 
   <div class="network-stats">
-    🎒 현재
-    <strong id="itnetCount">0</strong>개의 소중한 물건이<br>
-    잇넷과 함께하고 있어요.
-  </div>
-
-  <div class="use-section">
-
-    <div class="use-title">
-      다양한 물건에 사용할 수 있어요
-    </div>
-
-    <div class="use-list">
-      <div class="use-item">🔑 열쇠</div>
-      <div class="use-item">👛 지갑</div>
-      <div class="use-item">🎒 가방</div>
-      <div class="use-item">💻 노트북</div>
-      <div class="use-item">📱 휴대폰</div>
-      <div class="use-item">🚲 자전거</div>
-    </div>
-
+    현재
+    <strong id="itnetCount">0</strong>개의 잇넷 QR이<br>
+    소중한 연결을 지키고 있어요.
   </div>
 
   <div class="link-section">
 
     <a href="lost-item-qr.html" class="small-link">
-      📌 분실물 QR 자세히 보기
+      📌 잇넷 QR 자세히 보기
     </a>
 
     <a href="reviews.html" class="small-link">
@@ -435,26 +433,38 @@ body{
 
   <div class="petnet-box">
 
-    <div class="dog">🐶</div>
+    <div class="petnet-content">
 
-    <div class="petnet-text">
-      <h3>반려견 QR가 필요하신가요?</h3>
-      <p>
-        반려견을 위한 무료 QR 서비스는 펫넷 코리아를 이용하세요.
+      <div class="dog-circle">
+        🐶
+      </div>
+
+      <div class="petnet-label">
+        PETNET KOREA
+      </div>
+
+      <h3 class="petnet-title">
+        반려견을 위한 안전 연결망
+      </h3>
+
+      <p class="petnet-desc">
+        무료 반려견 QR로 발견자와 보호자를<br>
+        빠르게 연결하세요.
       </p>
-    </div>
 
-    <a
-      href="https://mans31910000-sys.github.io/"
-      class="petnet-btn"
-    >
-      펫넷 바로가기
-    </a>
+      <a
+        href="https://mans31910000-sys.github.io/"
+        class="petnet-btn"
+      >
+        펫넷 바로가기 →
+      </a>
+
+    </div>
 
   </div>
 
   <div class="footer">
-    ITNET KOREA · 무료 분실물 QR 연결 서비스
+    ITNET KOREA · 무료 QR 연결 서비스
   </div>
 
 </div>
@@ -467,7 +477,9 @@ function showCount(data){
     return;
   }
 
-  const count = data && data.itnetCount != null
+  const count = data && data.itnetTotalCount != null
+  ? Number(data.itnetTotalCount)
+  : data && data.itnetCount != null
     ? Number(data.itnetCount)
     : 0;
 
