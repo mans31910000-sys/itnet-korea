@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>보호자 연결 - 잇넷</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(180deg,#fffaf5 0%,#f5fbfc 100%);
+  color:#0b2239;
+  text-align:center;
+}
+
+.wrap{
+  width:100%;
+  max-width:620px;
+  margin:0 auto;
+  padding:28px 18px 45px;
+}
+
+.logo{
+  margin-bottom:6px;
+  color:#073052;
+  font-size:31px;
+  font-weight:900;
+}
+
+.logo span{
+  color:#00a99d;
+}
+
+.sub{
+  margin-bottom:24px;
+  color:#526474;
+  font-size:16px;
+}
+
+.card{
+  padding:27px 20px;
+  border-radius:25px;
+  background:#ffffff;
+  box-shadow:0 10px 30px rgba(0,0,0,0.09);
+}
+
+.icon{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:86px;
+  height:86px;
+  margin:0 auto 16px;
+  border-radius:50%;
+  background:#fff3e6;
+  font-size:48px;
+}
+
+h1{
+  margin:0 0 11px;
+  color:#d66b16;
+  font-size:27px;
+  line-height:1.4;
+  word-break:keep-all;
+}
+
+.main-guide{
+  margin:0 0 22px;
+  color:#405060;
+  font-size:17px;
+  line-height:1.7;
+  word-break:keep-all;
+}
+
+.info-box{
+  margin:15px 0;
+  padding:17px 15px;
+  border:1px solid #f0ddc8;
+  border-radius:17px;
+  background:#fffaf4;
+  text-align:left;
+}
+
+.info-row{
+  display:flex;
+  align-items:flex-start;
+  padding:7px 0;
+  font-size:17px;
+  line-height:1.5;
+}
+
+.info-label{
+  flex:0 0 95px;
+  color:#68727c;
+  font-weight:800;
+}
+
+.info-value{
+  flex:1;
+  color:#0b2239;
+  font-weight:900;
+  word-break:break-word;
+}
+
+.message-box{
+  margin:18px 0;
+  padding:18px 16px;
+  border-radius:17px;
+  background:#eefcff;
+  color:#274459;
+  font-size:17px;
+  line-height:1.7;
+  word-break:keep-all;
+}
+
+.btn{
+  display:block;
+  width:100%;
+  margin-top:12px;
+  padding:18px 15px;
+  border:0;
+  border-radius:16px;
+  color:#ffffff;
+  text-decoration:none;
+  font-size:19px;
+  font-weight:900;
+}
+
+.call-btn{
+  background:linear-gradient(90deg,#00a99d,#0077d9);
+}
+
+.emergency-btn{
+  background:#e85d4a;
+}
+
+.kakao-btn{
+  background:#f9d923;
+  color:#2d2500;
+}
+
+.notice{
+  margin-top:21px;
+  padding:15px;
+  border-radius:15px;
+  background:#f4f7f9;
+  color:#66737d;
+  font-size:14px;
+  line-height:1.65;
+  word-break:keep-all;
+}
+
+.error{
+  display:none;
+  padding:25px 15px;
+  color:#c62828;
+  font-size:18px;
+  font-weight:900;
+  line-height:1.6;
+}
+
+.loading{
+  padding:30px 10px;
+  color:#526474;
+  font-size:18px;
+  font-weight:800;
+}
+
+.hidden{
+  display:none;
+}
+
+.home{
+  display:block;
+  margin-top:19px;
+  color:#073b78;
+  text-decoration:none;
+  font-size:16px;
+  font-weight:900;
+}
+
+@media(max-width:560px){
+
+  .wrap{
+    padding:23px 14px 38px;
+  }
+
+  .logo{
+    font-size:28px;
+  }
+
+  .card{
+    padding:24px 16px;
+  }
+
+  h1{
+    font-size:24px;
+  }
+
+  .main-guide,
+  .message-box{
+    font-size:16px;
+  }
+
+  .info-row{
+    font-size:16px;
+  }
+
+  .info-label{
+    flex-basis:85px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+  <div class="logo">
+    잇넷 <span>(ITNET KOREA)</span>
+  </div>
+
+  <div class="sub">
+    소중한 그것(It)을 다시 연결합니다.
+  </div>
+
+  <div class="card">
+
+    <div id="loading" class="loading">
+      보호자 연결 정보를 확인하고 있습니다.
+    </div>
+
+    <div id="content" class="hidden">
+
+      <div class="icon">🤝</div>
+
+      <h1>
+        보호자 연결이 필요한 분입니다
+      </h1>
+
+      <div class="main-guide">
+        안전한 장소에서 보호자에게 연락해 주세요.
+      </div>
+
+      <div class="info-box">
+
+        <div class="info-row">
+          <div class="info-label">보호 대상</div>
+          <div class="info-value" id="guardianType"></div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-label">표시 이름</div>
+          <div class="info-value" id="personName"></div>
+        </div>
+
+      </div>
+
+      <div id="messageBox" class="message-box"></div>
+
+      <a id="guardianCall" class="btn call-btn">
+        📞 보호자에게 전화하기
+      </a>
+
+      <a id="emergencyCall" class="btn emergency-btn hidden">
+        ☎️ 비상 연락처로 전화하기
+      </a>
+
+      <a
+        id="kakaoButton"
+        class="btn kakao-btn hidden"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        💬 카카오톡으로 연락하기
+      </a>
+
+      <div class="notice">
+        보호가 필요한 분을 안전한 장소에 머물게 한 뒤 연락해 주세요.<br>
+        긴급한 위험이 있다면 112 또는 119에 먼저 신고해 주세요.
+      </div>
+
+    </div>
+
+    <div id="error" class="error">
+      등록 정보를 찾을 수 없습니다.<br>
+      QR 주소를 다시 확인해 주세요.
+    </div>
+
+  </div>
+
+  <a href="index.html" class="home">
+    잇넷 메인으로 돌아가기
+  </a>
+
+</div>
+
+<script>
+function showGuardian(data){
+  document.getElementById("loading").classList.add("hidden");
+
+  if(!data || data.error){
+    document.getElementById("error").style.display = "block";
+    return;
+  }
+
+  document.getElementById("content").classList.remove("hidden");
+
+  document.getElementById("guardianType").innerText =
+    data.guardianType || "보호가 필요한 분";
+
+  document.getElementById("personName").innerText =
+    data.personName || "이름 비공개";
+
+  const messageBox = document.getElementById("messageBox");
+
+  messageBox.innerText =
+    data.guideMessage ||
+    "보호가 필요한 분입니다. 안전한 장소에서 보호자에게 연락해 주세요.";
+
+  const guardianPhone =
+    String(data.guardianPhone || "").replace(/[^0-9+]/g, "");
+
+  const emergencyPhone =
+    String(data.emergencyPhone || "").replace(/[^0-9+]/g, "");
+
+  const guardianCall =
+    document.getElementById("guardianCall");
+
+  guardianCall.href = "tel:" + guardianPhone;
+
+  const emergencyCall =
+    document.getElementById("emergencyCall");
+
+  if(emergencyPhone){
+    emergencyCall.href = "tel:" + emergencyPhone;
+    emergencyCall.classList.remove("hidden");
+  }
+
+  const kakaoButton =
+    document.getElementById("kakaoButton");
+
+  if(data.kakaoLink){
+    kakaoButton.href = data.kakaoLink;
+    kakaoButton.classList.remove("hidden");
+  }
+}
+
+const params = new URLSearchParams(window.location.search);
+const guardianId = params.get("id") || "";
+
+if(!guardianId){
+  document.getElementById("loading").classList.add("hidden");
+  document.getElementById("error").style.display = "block";
+}else{
+  const script = document.createElement("script");
+
+  script.src =
+    "https://script.google.com/macros/s/AKfycbxxS-o0PaeURCt_Uj9DnwcjtdBj-3zjFl5dxPWFTwMbQhAyMEnOtmYc9xK57chq5bq3yQ/exec" +
+    "?action=guardianItem" +
+    "&id=" + encodeURIComponent(guardianId) +
+    "&callback=showGuardian";
+
+  script.onerror = function(){
+    document.getElementById("loading").classList.add("hidden");
+    document.getElementById("error").style.display = "block";
+  };
+
+  document.body.appendChild(script);
+}
+</script>
+
+</body>
+</html>
