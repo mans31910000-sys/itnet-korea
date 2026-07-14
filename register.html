@@ -3,10 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>잇넷 QR 등록</title>
 
 <style>
-*{box-sizing:border-box;}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -22,11 +25,11 @@ body{
 }
 
 .logo{
+  margin-bottom:8px;
+  color:#073052;
   text-align:center;
   font-size:32px;
   font-weight:900;
-  color:#073052;
-  margin-bottom:8px;
 }
 
 .logo span{
@@ -34,57 +37,132 @@ body{
 }
 
 .sub{
+  margin-bottom:28px;
+  color:#456;
   text-align:center;
   font-size:17px;
-  color:#456;
-  margin-bottom:28px;
 }
 
 .card{
-  background:white;
-  border-radius:26px;
   padding:28px 22px;
+  border-radius:26px;
+  background:#ffffff;
   box-shadow:0 10px 28px rgba(0,0,0,0.08);
 }
 
+.hidden{
+  display:none;
+}
+
 h1{
+  margin:0 0 12px;
   text-align:center;
   font-size:28px;
-  margin:0 0 12px;
 }
 
 .desc{
+  margin-bottom:26px;
+  color:#566;
   text-align:center;
   font-size:16px;
-  color:#566;
   line-height:1.6;
-  margin-bottom:26px;
+  word-break:keep-all;
 }
+
+/* QR 종류 선택 */
+
+.choice-list{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.choice-btn{
+  width:100%;
+  min-height:215px;
+  padding:24px 16px;
+  border:2px solid #dce9ee;
+  border-radius:22px;
+  background:#ffffff;
+  color:#0b2239;
+  text-align:center;
+  cursor:pointer;
+  transition:transform 0.15s ease, border-color 0.15s ease;
+}
+
+.choice-btn:active{
+  transform:scale(0.98);
+}
+
+.choice-btn.item-choice{
+  background:linear-gradient(145deg,#f4fffd,#eef8ff);
+}
+
+.choice-btn.guardian-choice{
+  background:linear-gradient(145deg,#fffaf3,#fff4f3);
+}
+
+.choice-btn:hover{
+  border-color:#00a99d;
+}
+
+.choice-icon{
+  margin-bottom:14px;
+  font-size:52px;
+}
+
+.choice-title{
+  margin-bottom:9px;
+  font-size:21px;
+  font-weight:900;
+}
+
+.choice-text{
+  color:#566;
+  font-size:15px;
+  line-height:1.55;
+  word-break:keep-all;
+}
+
+/* 입력 화면 */
 
 label{
   display:block;
+  margin:18px 0 8px;
   font-size:17px;
   font-weight:bold;
-  margin:18px 0 8px;
 }
 
-input{
+input,
+select,
+textarea{
   width:100%;
   padding:17px 16px;
   border:2px solid #dce9ee;
   border-radius:16px;
+  background:#ffffff;
+  color:#0b2239;
+  font-family:Arial, sans-serif;
   font-size:17px;
 }
 
-input:focus{
+textarea{
+  min-height:115px;
+  line-height:1.5;
+  resize:vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
   outline:none;
   border-color:#00a99d;
 }
 
 .help{
-  font-size:14px;
-  color:#778;
   margin-top:6px;
+  color:#778;
+  font-size:14px;
   line-height:1.5;
 }
 
@@ -95,19 +173,10 @@ input:focus{
   border:0;
   border-radius:20px;
   background:linear-gradient(90deg,#00b8a9,#0077d9);
-  color:white;
+  color:#ffffff;
   font-size:24px;
   font-weight:900;
   cursor:pointer;
-}
-
-.home{
-  display:block;
-  text-align:center;
-  margin-top:18px;
-  color:#073b78;
-  font-weight:bold;
-  text-decoration:none;
 }
 
 .notice{
@@ -115,9 +184,68 @@ input:focus{
   padding:16px;
   border-radius:16px;
   background:#eefcff;
-  font-size:15px;
   color:#405060;
+  font-size:15px;
   line-height:1.6;
+  word-break:keep-all;
+}
+
+.guardian-notice{
+  border:1px solid #f2ddc4;
+  background:#fff7ed;
+}
+
+.back-btn{
+  width:100%;
+  margin-top:18px;
+  padding:16px;
+  border:2px solid #dce9ee;
+  border-radius:16px;
+  background:#ffffff;
+  color:#073b78;
+  font-size:17px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.home{
+  display:block;
+  margin-top:18px;
+  color:#073b78;
+  text-align:center;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+@media(max-width:560px){
+
+  .wrap{
+    padding:26px 14px 42px;
+  }
+
+  .logo{
+    font-size:29px;
+  }
+
+  .card{
+    padding:25px 17px;
+  }
+
+  h1{
+    font-size:25px;
+  }
+
+  .choice-list{
+    grid-template-columns:1fr;
+  }
+
+  .choice-btn{
+    min-height:185px;
+  }
+
+  .choice-icon{
+    font-size:47px;
+  }
 }
 </style>
 </head>
@@ -126,45 +254,313 @@ input:focus{
 
 <div class="wrap">
 
-  <div class="logo">잇넷 <span>(ITNET KOREA)</span></div>
-  <div class="sub">소중한 그것(It)을 다시 연결합니다.</div>
+  <div class="logo">
+    잇넷 <span>(ITNET KOREA)</span>
+  </div>
 
-  <div class="card">
-    <h1>무료 QR 등록</h1>
+  <div class="sub">
+    소중한 그것(It)을 다시 연결합니다.
+  </div>
+
+  <!-- QR 종류 선택 화면 -->
+
+  <div class="card" id="choiceCard">
+
+    <h1>어떤 QR을 만들까요?</h1>
+
+    <div class="desc">
+      사용할 대상을 선택해 주세요.
+    </div>
+
+    <div class="choice-list">
+
+      <button
+        type="button"
+        class="choice-btn item-choice"
+        onclick="showItemForm()"
+      >
+        <div class="choice-icon">🎒</div>
+
+        <div class="choice-title">
+          물건용 QR
+        </div>
+
+        <div class="choice-text">
+          열쇠·지갑·가방·노트북 등<br>
+          소중한 물건에 사용하는 QR
+        </div>
+      </button>
+
+      <button
+        type="button"
+        class="choice-btn guardian-choice"
+        onclick="showGuardianForm()"
+      >
+        <div class="choice-icon">🤝</div>
+
+        <div class="choice-title">
+          보호자 연결 QR
+        </div>
+
+        <div class="choice-text">
+          아동·치매노인 등<br>
+          보호가 필요한 분을 위한 QR
+        </div>
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- 기존 물건 등록 화면 -->
+
+  <div class="card hidden" id="itemCard">
+
+    <h1>물건용 무료 QR 등록</h1>
 
     <div class="desc">
       소중한 물건에 붙일 QR을 생성합니다.<br>
       발견자가 QR을 스캔하면 주인에게 연락할 수 있습니다.
     </div>
 
-    <form action="https://script.google.com/macros/s/AKfycbxxS-o0PaeURCt_Uj9DnwcjtdBj-3zjFl5dxPWFTwMbQhAyMEnOtmYc9xK57chq5bq3yQ/exec" method="post">
-      <input type="hidden" name="action" value="itnetRegister">
+    <form
+      action="https://script.google.com/macros/s/AKfycbxxS-o0PaeURCt_Uj9DnwcjtdBj-3zjFl5dxPWFTwMbQhAyMEnOtmYc9xK57chq5bq3yQ/exec"
+      method="post"
+    >
+
+      <input
+        type="hidden"
+        name="action"
+        value="itnetRegister"
+      >
 
       <label>물건 이름</label>
-      <input type="text" name="itemName" placeholder="예: 자동차 키, 지갑, 캐리어" required>
+
+      <input
+        type="text"
+        name="itemName"
+        placeholder="예: 자동차 키, 지갑, 캐리어"
+        required
+      >
 
       <label>주인 연락처</label>
-      <input type="tel" name="ownerPhone" placeholder="예: 01012345678" required>
-      <div class="help">숫자만 입력해도 됩니다.</div>
 
-      <label>비상 연락처 <span style="color:#888; font-weight:normal;">(선택)</span></label>
-      <input type="tel" name="emergencyPhone" placeholder="주인이 연락되지 않을 때 연결할 번호">
+      <input
+        type="tel"
+        name="ownerPhone"
+        placeholder="예: 01012345678"
+        required
+      >
 
-      <label>카카오 오픈채팅 링크 <span style="color:#888; font-weight:normal;">(선택)</span></label>
-      <input type="url" name="kakaoLink" placeholder="https://open.kakao.com/...">
+      <div class="help">
+        숫자만 입력해도 됩니다.
+      </div>
 
-      <button type="submit" class="btn">QR 생성하기</button>
+      <label>
+        비상 연락처
+        <span style="color:#888; font-weight:normal;">
+          (선택)
+        </span>
+      </label>
+
+      <input
+        type="tel"
+        name="emergencyPhone"
+        placeholder="주인이 연락되지 않을 때 연결할 번호"
+      >
+
+      <label>
+        카카오 오픈채팅 링크
+        <span style="color:#888; font-weight:normal;">
+          (선택)
+        </span>
+      </label>
+
+      <input
+        type="url"
+        name="kakaoLink"
+        placeholder="https://open.kakao.com/"
+      >
+
+      <button type="submit" class="btn">
+        QR 생성하기
+      </button>
+
     </form>
 
     <div class="notice">
       🔒 잇넷은 발견자와 주인을 빠르게 연결하기 위한 QR 서비스입니다.<br>
       비상 연락처는 선택 입력이며, 주인과 연결되지 않을 때 도움을 줄 수 있습니다.
     </div>
+
+    <button
+      type="button"
+      class="back-btn"
+      onclick="showChoice()"
+    >
+      QR 종류 다시 선택하기
+    </button>
+
   </div>
 
-  <a href="index.html" class="home">잇넷 메인으로 돌아가기</a>
+  <!-- 보호자 연결 QR 등록 화면 -->
+
+  <div class="card hidden" id="guardianCard">
+
+    <h1>보호자 연결 QR 등록</h1>
+
+    <div class="desc">
+      보호가 필요한 분을 발견했을 때<br>
+      보호자와 빠르게 연결하기 위한 QR입니다.
+    </div>
+
+    <form
+      action="https://script.google.com/macros/s/AKfycbxxS-o0PaeURCt_Uj9DnwcjtdBj-3zjFl5dxPWFTwMbQhAyMEnOtmYc9xK57chq5bq3yQ/exec"
+      method="post"
+    >
+
+      <input
+        type="hidden"
+        name="action"
+        value="guardianRegister"
+      >
+
+      <label>보호 대상</label>
+
+      <select name="guardianType" required>
+  <option value="">선택해 주세요</option>
+  <option value="아동">아동</option>
+  <option value="치매노인">치매노인</option>
+  <option value="장애인">장애인</option>
+  <option value="기타">기타</option>
+</select>
+
+      <label>표시 이름 또는 애칭</label>
+
+      <input
+        type="text"
+        name="personName"
+        placeholder="예: 민수, 행복이, 김○○"
+        required
+      >
+
+      <div class="help">
+        실명 전체 대신 애칭이나 일부 이름을 사용할 수 있습니다.
+      </div>
+
+      <label>보호자 연락처</label>
+
+      <input
+        type="tel"
+        name="guardianPhone"
+        placeholder="예: 01012345678"
+        required
+      >
+
+      <div class="help">
+        발견자가 연락할 수 있는 보호자 번호입니다.
+      </div>
+
+      <label>
+        비상 연락처
+        <span style="color:#888; font-weight:normal;">
+          (선택)
+        </span>
+      </label>
+
+      <input
+        type="tel"
+        name="emergencyPhone"
+        placeholder="보호자와 연결되지 않을 때 연락할 번호"
+      >
+
+      <label>
+        발견자 안내 문구
+        <span style="color:#888; font-weight:normal;">
+          (선택)
+        </span>
+      </label>
+
+      <textarea
+        name="guideMessage"
+        maxlength="120"
+        placeholder="예: 보호가 필요한 분입니다. 안전한 장소에서 보호자에게 연락해 주세요."
+      ></textarea>
+
+      <div class="help">
+        주소·주민번호·상세한 의료정보는 입력하지 않는 것이 좋습니다.
+      </div>
+
+      <label>
+        카카오 오픈채팅 링크
+        <span style="color:#888; font-weight:normal;">
+          (선택)
+        </span>
+      </label>
+
+      <input
+        type="url"
+        name="kakaoLink"
+        placeholder="https://open.kakao.com/"
+      >
+
+      <button type="submit" class="btn">
+        보호자 연결 QR 생성하기
+      </button>
+
+    </form>
+
+    <div class="notice guardian-notice">
+      🔒 이름·주소 등 개인정보는 꼭 필요한 범위만 입력해 주세요.<br>
+      QR 화면에는 보호자가 입력한 안내와 연락 버튼만 표시됩니다.
+    </div>
+
+    <button
+      type="button"
+      class="back-btn"
+      onclick="showChoice()"
+    >
+      QR 종류 다시 선택하기
+    </button>
+
+  </div>
+
+  <a href="index.html" class="home">
+    잇넷 메인으로 돌아가기
+  </a>
 
 </div>
+
+<script>
+const choiceCard = document.getElementById("choiceCard");
+const itemCard = document.getElementById("itemCard");
+const guardianCard = document.getElementById("guardianCard");
+
+function hideAllCards(){
+  choiceCard.classList.add("hidden");
+  itemCard.classList.add("hidden");
+  guardianCard.classList.add("hidden");
+}
+
+function showChoice(){
+  hideAllCards();
+  choiceCard.classList.remove("hidden");
+  window.scrollTo(0, 0);
+}
+
+function showItemForm(){
+  hideAllCards();
+  itemCard.classList.remove("hidden");
+  window.scrollTo(0, 0);
+}
+
+function showGuardianForm(){
+  hideAllCards();
+  guardianCard.classList.remove("hidden");
+  window.scrollTo(0, 0);
+}
+
+</script>
 
 </body>
 </html>
