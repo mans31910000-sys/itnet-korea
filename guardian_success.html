@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>보호자 연결 QR 생성 완료 - 잇넷</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(180deg,#ffffff 0%,#fffaf5 100%);
+  color:#0b2239;
+  text-align:center;
+}
+
+.wrap{
+  width:100%;
+  max-width:620px;
+  margin:0 auto;
+  padding:30px 18px 45px;
+}
+
+.card{
+  padding:28px 18px;
+  border-radius:24px;
+  background:#ffffff;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+h1{
+  margin:0 0 10px;
+  color:#d66b16;
+  font-size:28px;
+  line-height:1.4;
+}
+
+.guardian-number{
+  margin:12px 0;
+  color:#00a99d;
+  font-size:30px;
+  font-weight:900;
+}
+
+.desc{
+  color:#4d5d73;
+  font-size:17px;
+  line-height:1.7;
+  word-break:keep-all;
+}
+
+.qr-box{
+  display:inline-block;
+  margin:18px 0 24px;
+  padding:18px;
+  border:2px solid #f0ddc8;
+  border-radius:18px;
+  background:#ffffff;
+}
+
+.qr-box img{
+  display:block;
+  width:260px;
+  max-width:100%;
+}
+
+.info{
+  margin-bottom:22px;
+  color:#405060;
+  font-size:15px;
+  line-height:1.8;
+  word-break:keep-all;
+}
+
+.option-box{
+  max-width:470px;
+  margin:24px auto;
+  padding:20px 16px;
+  border:2px solid #f0ddc8;
+  border-radius:18px;
+  background:#fffaf4;
+}
+
+.option-title{
+  margin:6px 0 12px;
+  font-size:18px;
+  font-weight:900;
+}
+
+.shape-options{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-bottom:22px;
+}
+
+.shape-options label{
+  padding:11px 13px;
+  border:2px solid #d66b16;
+  border-radius:11px;
+  background:#ffffff;
+  color:#b9570d;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.size-options{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.size-btn{
+  padding:13px 8px;
+  border:2px solid #d66b16;
+  border-radius:11px;
+  background:#ffffff;
+  color:#b9570d;
+  font-size:16px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.size-btn.active{
+  background:#d66b16;
+  color:#ffffff;
+}
+
+.guide{
+  margin-top:15px;
+  color:#556;
+  font-size:15px;
+  line-height:1.6;
+}
+
+.count{
+  margin-top:7px;
+  color:#d66b16;
+  font-size:16px;
+  font-weight:900;
+}
+
+.warning{
+  margin-top:14px;
+  padding:12px;
+  border-radius:11px;
+  background:#fff4d6;
+  color:#6a5200;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.btn{
+  display:block;
+  width:100%;
+  max-width:380px;
+  margin:12px auto;
+  padding:17px 14px;
+  border:2px solid #d66b16;
+  border-radius:14px;
+  text-decoration:none;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.primary{
+  background:linear-gradient(90deg,#e57a22,#d65a16);
+  color:#ffffff;
+}
+
+.secondary{
+  background:#ffffff;
+  color:#b9570d;
+}
+
+.footer{
+  margin-top:23px;
+  color:#66737d;
+  font-size:14px;
+}
+
+.error{
+  padding:30px 15px;
+  color:#c62828;
+  font-size:18px;
+  font-weight:900;
+  line-height:1.7;
+}
+
+.hidden{
+  display:none;
+}
+
+@media(max-width:560px){
+
+  .wrap{
+    padding:24px 14px 38px;
+  }
+
+  .card{
+    padding:25px 15px;
+  }
+
+  h1{
+    font-size:25px;
+  }
+
+  .guardian-number{
+    font-size:27px;
+  }
+
+  .desc{
+    font-size:16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+  <div class="card" id="successContent">
+
+    <h1>보호자 연결 QR이<br>생성되었습니다</h1>
+
+    <div class="guardian-number" id="guardianNumber"></div>
+
+    <div class="desc">
+      아래 QR을 출력해 팔찌·목걸이·카드 등에 부착하세요.<br>
+      발견자가 스캔하면 보호자 연결 화면이 표시됩니다.
+    </div>
+
+    <div class="qr-box">
+      <img id="qrImage" alt="잇넷 보호자 연결 QR">
+    </div>
+
+    <div class="info">
+      📱 휴대폰 카메라로 먼저 스캔해 보세요.<br>
+      ✂️ 사각 또는 원형 테두리를 따라 잘라 사용할 수 있습니다.
+    </div>
+
+    <div class="option-box">
+
+      <div class="option-title">
+        출력 형태를 선택하세요
+      </div>
+
+      <div class="shape-options">
+
+        <label>
+          <input type="radio" name="printShape" value="half" checked>
+          반반 추천
+        </label>
+
+        <label>
+          <input type="radio" name="printShape" value="square">
+          사각만
+        </label>
+
+        <label>
+          <input type="radio" name="printShape" value="circle">
+          원형만
+        </label>
+
+      </div>
+
+      <div class="option-title">
+        출력할 QR 크기를 선택하세요
+      </div>
+
+      <div class="size-options">
+
+        <button type="button" class="size-btn" data-size="15">
+          15mm 초소형
+        </button>
+
+        <button type="button" class="size-btn" data-size="20">
+          20mm 소형
+        </button>
+
+        <button type="button" class="size-btn active" data-size="25">
+          25mm 추천
+        </button>
+
+        <button type="button" class="size-btn" data-size="30">
+          30mm 대형
+        </button>
+
+      </div>
+
+      <div id="sizeGuide" class="guide">
+        25mm · 표준 크기 · 팔찌·목걸이·카드 등에 추천
+      </div>
+
+      <div id="printCount" class="count"></div>
+
+      <div class="warning">
+        인쇄할 때 <strong>배율 100% 또는 실제 크기</strong>를 선택하세요.<br>
+        ‘페이지에 맞춤’은 사용하지 마세요.
+      </div>
+
+    </div>
+
+    <button type="button" class="btn primary" onclick="printQrSheet()">
+      🖨️ A4에 QR 출력하기
+    </button>
+
+    <button type="button" class="btn secondary" onclick="sharePrintLink()">
+      📤 PC로 링크 보내기
+    </button>
+
+    <div class="info">
+      📱 휴대폰이 프린터와 연결되어 있으면 출력 버튼을 누르세요.<br>
+      💻 연결되어 있지 않으면 링크를 보내 PC에서 출력하세요.
+    </div>
+
+    <a
+      href="https://mans31910000-sys.github.io/itnet-korea/"
+      class="btn secondary"
+    >
+      홈으로 돌아가기
+    </a>
+
+  </div>
+
+  <div id="errorContent" class="card error hidden">
+    보호자 연결 번호가 없습니다.<br>
+    등록을 다시 진행해 주세요.
+  </div>
+
+  <div class="footer">
+    소중한 그것(It)을 다시 연결합니다.
+  </div>
+
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const guardianId = params.get("id") || "";
+
+let qrUrl = "";
+let selectedSize = 25;
+
+const guides = {
+  15: "15mm · 초소형 · 작은 팔찌나 스티커용",
+  20: "20mm · 소형 · 팔찌나 작은 인식표용",
+  25: "25mm · 표준 크기 · 팔찌·목걸이·카드 등에 추천",
+  30: "30mm · 대형 · 가방이나 큰 카드용"
+};
+
+const pageWidth = 194;
+const pageHeight = 281;
+const gap = 8;
+
+if(!guardianId){
+
+  document
+    .getElementById("successContent")
+    .classList.add("hidden");
+
+  document
+    .getElementById("errorContent")
+    .classList.remove("hidden");
+
+}else{
+
+  const guardianPageUrl =
+    "https://mans31910000-sys.github.io/itnet-korea/guardian.html?id=" +
+    encodeURIComponent(guardianId);
+
+  qrUrl =
+    "https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=" +
+    encodeURIComponent(guardianPageUrl);
+
+  document.getElementById("guardianNumber").innerText = guardianId;
+  document.getElementById("qrImage").src = qrUrl;
+}
+
+function getLayout(size){
+
+  const columns =
+    Math.floor((pageWidth + gap) / (size + gap));
+
+  const rows =
+    Math.floor((pageHeight + gap) / (size + gap));
+
+  return {
+    columns:columns,
+    rows:rows,
+    total:columns * rows
+  };
+}
+
+function updateInformation(){
+
+  const layout = getLayout(selectedSize);
+
+  document.getElementById("sizeGuide").innerText =
+    guides[selectedSize];
+
+  document.getElementById("printCount").innerText =
+    "A4 한 장에 " +
+    layout.columns + "열 × " +
+    layout.rows + "줄, 총 " +
+    layout.total + "개가 출력됩니다.";
+}
+
+document.querySelectorAll(".size-btn").forEach(function(button){
+
+  button.addEventListener("click", function(){
+
+    document.querySelectorAll(".size-btn").forEach(function(btn){
+      btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    selectedSize =
+      Number(button.getAttribute("data-size"));
+
+    updateInformation();
+  });
+});
+
+if(guardianId){
+  updateInformation();
+}
+
+function sharePrintLink(){
+
+  const shareUrl =
+    "https://mans31910000-sys.github.io/itnet-korea/guardian_success.html?id=" +
+    encodeURIComponent(guardianId);
+
+  const shareText =
+    "잇넷 보호자 연결 QR 출력 링크입니다.";
+
+  if(navigator.share){
+
+    navigator.share({
+      title:"잇넷 보호자 연결 QR",
+      text:shareText,
+      url:shareUrl
+    }).catch(function(){});
+
+  }else if(navigator.clipboard){
+
+    navigator.clipboard.writeText(shareUrl).then(function(){
+      alert("출력 링크가 복사되었습니다. 카카오톡 나에게 보내기로 붙여 넣으세요.");
+    });
+
+  }else{
+
+    prompt("아래 링크를 복사해 PC로 보내세요.", shareUrl);
+  }
+}
+
+function printQrSheet(){
+
+  const shapeInput =
+    document.querySelector('input[name="printShape"]:checked');
+
+  const printShape =
+    shapeInput ? shapeInput.value : "half";
+
+  const layout = getLayout(selectedSize);
+  const columns = layout.columns;
+  const total = layout.total;
+
+  const qrInnerSize =
+    selectedSize === 15 ? 9.5 :
+    selectedSize === 20 ? 13.5 :
+    selectedSize === 25 ? 18 :
+    22;
+
+  const labelFontSize =
+    selectedSize === 15 ? 1.35 :
+    selectedSize === 20 ? 1.65 :
+    selectedSize === 25 ? 1.9 :
+    2.1;
+
+  const printWindow = window.open("", "_blank");
+
+  if(!printWindow){
+    alert("팝업이 차단되었습니다. 팝업을 허용한 뒤 다시 눌러주세요.");
+    return;
+  }
+
+  let qrItems = "";
+
+  for(let i = 0; i < total; i++){
+
+    let shapeClass = "square";
+
+    if(printShape === "circle"){
+
+      shapeClass = "circle";
+
+    }else if(printShape === "half"){
+
+      const columnNumber = i % columns;
+
+      shapeClass =
+        columnNumber < Math.ceil(columns / 2)
+        ? "square"
+        : "circle";
+    }
+
+    qrItems +=
+      '<div class="qr-item ' + shapeClass + '">' +
+        '<div class="qr-content">' +
+          '<img src="' + qrUrl + '" alt="잇넷 보호자 연결 QR">' +
+          '<div class="qr-label">잇넷 보호QR</div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  const printHtml =
+    '<!DOCTYPE html>' +
+    '<html lang="ko">' +
+    '<head>' +
+    '<meta charset="UTF-8">' +
+    '<title>잇넷 보호자 연결 QR 출력</title>' +
+
+    '<style>' +
+    '@page{size:A4 portrait;margin:8mm;}' +
+    '*{box-sizing:border-box;}' +
+    'html,body{margin:0;padding:0;background:#fff;}' +
+
+    '.qr-sheet{' +
+      'width:194mm;' +
+      'height:281mm;' +
+      'display:grid;' +
+      'grid-template-columns:repeat(' +
+        columns + ',' + selectedSize + 'mm);' +
+      'grid-auto-rows:' + selectedSize + 'mm;' +
+      'gap:' + gap + 'mm;' +
+      'justify-content:center;' +
+      'align-content:center;' +
+      'overflow:hidden;' +
+    '}' +
+
+    '.qr-item{' +
+      'width:' + selectedSize + 'mm;' +
+      'height:' + selectedSize + 'mm;' +
+      'display:flex;' +
+      'align-items:center;' +
+      'justify-content:center;' +
+      'overflow:hidden;' +
+      'break-inside:avoid;' +
+      'background:#ffffff;' +
+    '}' +
+
+    '.qr-item.square{' +
+      'border:0.25mm dashed #cccccc;' +
+      'border-radius:3mm;' +
+    '}' +
+
+    '.qr-item.circle{' +
+      'border:0.25mm dashed #cccccc;' +
+      'border-radius:50%;' +
+    '}' +
+
+    '.qr-content{' +
+      'width:100%;' +
+      'height:100%;' +
+      'display:flex;' +
+      'flex-direction:column;' +
+      'align-items:center;' +
+      'justify-content:center;' +
+      'gap:0.35mm;' +
+      'padding:0.8mm;' +
+    '}' +
+
+    '.qr-item img{' +
+      'display:block;' +
+      'width:' + qrInnerSize + 'mm;' +
+      'height:' + qrInnerSize + 'mm;' +
+      'object-fit:contain;' +
+      'flex:none;' +
+    '}' +
+
+    '.qr-label{' +
+      'font-family:Arial,"Noto Sans KR",sans-serif;' +
+      'font-size:' + labelFontSize + 'mm;' +
+      'font-weight:900;' +
+      'line-height:1;' +
+      'letter-spacing:-0.1mm;' +
+      'color:#000000;' +
+      'white-space:nowrap;' +
+      'text-align:center;' +
+    '}' +
+
+    '.qr-item.circle img{' +
+      'width:' + (qrInnerSize - 1) + 'mm;' +
+      'height:' + (qrInnerSize - 1) + 'mm;' +
+    '}' +
+
+    '.qr-item.circle .qr-label{' +
+      'font-size:' + (labelFontSize * 0.9) + 'mm;' +
+    '}' +
+
+    '</style>' +
+    '</head>' +
+
+    '<body>' +
+
+      '<div class="qr-sheet">' +
+        qrItems +
+      '</div>' +
+
+      '<script>' +
+      'window.addEventListener("load",function(){' +
+        'setTimeout(function(){window.print();},500);' +
+      '});' +
+      '<\/script>' +
+
+    '</body>' +
+    '</html>';
+
+  printWindow.document.open();
+  printWindow.document.write(printHtml);
+  printWindow.document.close();
+}
+</script>
+
+</body>
+</html>
